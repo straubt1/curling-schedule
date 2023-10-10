@@ -13,11 +13,11 @@ get_bookings () {
 # START_DATE="10-10-2023"
 # START_DATE=$(date +%m-%d-%Y)
 # date -v +0d +%m-%d-%Y
-START_DATE=$(date -v +1d)
-NUM_DAYS=1
+# START_DATE=$(date -v +1d)
+# NUM_DAYS=1
 
 
-for i in {1..2}
+for i in {1..7}
 do
   get_bookings $i
 done
