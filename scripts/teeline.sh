@@ -6,12 +6,10 @@ get_next_date () {
   case `uname` in
 
   Darwin)
-    echo "Darwin"
     NEXT_DATE=$(date -v +${date_offset}d +%m-%d-%Y)
     # TIMESTAMP=`date -v -${EXPIRY_DAYS}d +%Y-%m-%d`
     ;;
   Linux)
-    echo "Linux"
     NEXT_DATE=$(date -u --date="+${date_offset} day" +%m-%d-%Y)
     # TIMESTAMP=`date -u --date="-${EXPIRY_DAYS} day" +%Y-%m-%d`
     ;;
@@ -20,7 +18,7 @@ get_next_date () {
     exit 1;
     ;;
 esac
-
+echo $NEXT_DATE
 }
 get_bookings () {
   local date_offset=$1
