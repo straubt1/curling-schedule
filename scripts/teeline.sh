@@ -26,7 +26,7 @@ get_bookings () {
   local date_offset=$1
 
   # get date offset in the proper format, i.e. "10-10-2023"
-  NEXT_DATE=$(date -v +${date_offset}d +%m-%d-%Y)
+  NEXT_DATE=$(get_next_date ${date_offset})
   
   curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=17:00&party_size=4&halo_size_interval=24&start_date=${NEXT_DATE}&num_days=1&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type | contains("book")) | [(now | strflocaltime("%Y-%m-%d %H:%M:%S")), $k, .time] | @csv' >> "${NEXT_DATE}.csv"
 }
