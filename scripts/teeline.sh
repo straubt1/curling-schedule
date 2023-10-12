@@ -12,7 +12,7 @@ get_next_date () {
     ;;
   Linux)
     echo "Linux"
-    NEXT_DATE=$(date -u --date="+${date_offset}d" +%m-%d-%Y)
+    NEXT_DATE=$(date -u --date="+${date_offset} day" +%m-%d-%Y)
     # TIMESTAMP=`date -u --date="-${EXPIRY_DAYS} day" +%Y-%m-%d`
     ;;
   *)
