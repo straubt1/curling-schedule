@@ -62,7 +62,7 @@ get_bookings () {
   echo "Next Date: ${NEXT_DATE}"
   create_date_file ${NEXT_FILENAME}
   # Get times that are open, returns a string with those times for a single day
-  TIMES=`curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=17:00&party_size=4&halo_size_interval=24&start_date=${NEXT_DATE}&num_days=1&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book").time'`
+  TIMES=`curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=16:00&party_size=4&halo_size_interval=24&start_date=${NEXT_DATE}&num_days=1&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book").time'`
   
   # Replace new lines with "; " since jq doesn't like to do what I ask...
   TIMES=${TIMES//$'\n'/; }
