@@ -35,7 +35,7 @@ get_bookings () {
 
   NEXT_DATE=$(get_next_date ${date_offset}) # get date offset in the proper format, i.e. "10-10-2023"
   NEXT_FILENAME="${NEXT_DATE}.csv"
-  QUERY_DATE=$(date)
+  QUERY_DATE=$(date +"%m-%d-%Y %I:%M:%S %p" )
   
   create_date_file ${NEXT_FILENAME}
   # Get times that are open, returns a string with those times for a single day
