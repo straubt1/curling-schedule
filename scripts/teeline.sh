@@ -21,6 +21,27 @@ esac
 echo $NEXT_DATE
 }
 
+get_next_date_day () {
+  local date_offset=$1  
+
+  case `uname` in
+
+  Darwin)
+    NEXT_DATE=$(TZ=":US/Central" date -v +${date_offset}d +%A)
+    # TIMESTAMP=`date -v -${EXPIRY_DAYS}d +%Y-%m-%d`
+    ;;
+  Linux)
+    NEXT_DATE=$(TZ=":US/Central" date -u --date="+${date_offset} day" +%A)
+    # TIMESTAMP=`date -u --date="-${EXPIRY_DAYS} day" +%Y-%m-%d`
+    ;;
+  *)
+    echo "Platform not supported. Exiting.";
+    exit 1;
+    ;;
+esac
+echo $NEXT_DATE
+}
+
 create_date_file () {
   local NEXT_FILENAME=$1
 
@@ -34,7 +55,8 @@ get_bookings () {
   local date_offset=$1
 
   NEXT_DATE=$(get_next_date ${date_offset}) # get date offset in the proper format, i.e. "10-10-2023"
-  NEXT_FILENAME="dates/${NEXT_DATE}.csv"
+  NEXT_DATE_DAY=$(get_next_date_day ${date_offset}) # get day with date offset in the proper format, i.e. "Friday"
+  NEXT_FILENAME="dates/${NEXT_DATE}(${NEXT_DATE_DAY}).csv"
   QUERY_DATE=$(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")
   
   echo "Next Date: ${NEXT_DATE}"
