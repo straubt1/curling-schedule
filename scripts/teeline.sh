@@ -66,7 +66,7 @@ get_bookings () {
   # Replace new lines with "; " since jq doesn't like to do what I ask...
   TIMES=${TIMES//$'\n'/; }
   echo "${QUERY_DATE},${TIMES}" >> ${NEXT_FILENAME}
-  echo "|${NEXT_DATE}|${TIMES}|"
+  echo "|${NEXT_DATE_DAY}|${NEXT_DATE}|${TIMES}|"
 }
 
 SUMMARY_FILENAME="README.md"
@@ -75,16 +75,11 @@ SUMMARY_FILENAME="README.md"
 cat <<EOT > ${SUMMARY_FILENAME}
 # Ice Availability
 
-List the latest availability for the next week.
+List the latest availability for the next week, Last Update at **$(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")**
 
-**Last Update:** $(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")
-
-| Date        | Times       |
-| ----------- | ----------- |
+| Day         | Date        | Times       |
+| ----------- | ----------- | ----------- |
 EOT
-# | Header      | Title       |
-# | Paragraph   | Text        |
-
 
 for i in {0..6}
 do
