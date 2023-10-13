@@ -77,6 +77,8 @@ cat <<EOT > ${SUMMARY_FILENAME}
 
 List the latest availability for the next week.
 
+**Last Update:** $(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")
+
 | Date        | Times       |
 | ----------- | ----------- |
 EOT
