@@ -34,7 +34,7 @@ get_bookings () {
   local date_offset=$1
 
   NEXT_DATE=$(get_next_date ${date_offset}) # get date offset in the proper format, i.e. "10-10-2023"
-  NEXT_FILENAME="${NEXT_DATE}.csv"
+  NEXT_FILENAME="dates/${NEXT_DATE}.csv"
   QUERY_DATE=$(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")
   
   create_date_file ${NEXT_FILENAME}
