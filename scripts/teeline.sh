@@ -59,7 +59,6 @@ get_bookings () {
   NEXT_FILENAME="dates/${NEXT_DATE}(${NEXT_DATE_DAY}).csv"
   QUERY_DATE=$(TZ=":US/Central" date +"%m-%d-%Y %I:%M:%S %p")
   
-  echo "Next Date: ${NEXT_DATE}"
   create_date_file ${NEXT_FILENAME}
   # Get times that are open, returns a string with those times for a single day
   TIMES=`curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=16:00&party_size=4&halo_size_interval=24&start_date=${NEXT_DATE}&num_days=1&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book").time'`
@@ -67,25 +66,26 @@ get_bookings () {
   # Replace new lines with "; " since jq doesn't like to do what I ask...
   TIMES=${TIMES//$'\n'/; }
   echo "${QUERY_DATE},${TIMES}" >> ${NEXT_FILENAME}
+  echo "|${NEXT_DATE}|${TIMES}|"
 }
 
-# get_bookings 0
+SUMMARY_FILENAME="README.md"
 
-# cat times.json| jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book")'
-# TIMES=`cat times.json | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book").time'`
-# echo $TIMES
-# cat times.json| jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type | contains("book")) | [(now | strflocaltime("%Y-%m-%d %H:%M:%S")), $k, .time] | join(",")'
+# Create Static File Content
+cat <<EOT > ${SUMMARY_FILENAME}
+# Ice Availability
 
-# get_bookings 0 
+List the latest availability for the next week.
+
+| Date        | Times       |
+| ----------- | ----------- |
+EOT
+# | Header      | Title       |
+# | Paragraph   | Text        |
+
+
 for i in {0..6}
 do
-  get_bookings $i
+  line=$(get_bookings $i)
+  echo ${line} >> ${SUMMARY_FILENAME}
 done
-
-# printf -v date '%(%d-%m-%YY)T\n' -1
-
-
-# echo $START_DATE
-
-# curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=17:00&party_size=4&halo_size_interval=24&start_date=${START_DATE}&num_days=${NUM_DAYS}&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type | contains("book")) | [$k, .time] | @csv'
-
