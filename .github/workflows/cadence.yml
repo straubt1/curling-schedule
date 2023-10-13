@@ -4,11 +4,13 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # schedule to run
+  schedule:
+    - cron: '*/16 7-21 * * *'
+    # This expression will fire at every 16th minute of every hour between 7 am and 10 pm every day.
+    #   */16: Every 16 minutes.
+    #   7-21: Between the 7th and 21st hour (7 am to 10 pm).
+    #   * * *: Every day of the month, every month, and every day of the week.
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,22 +21,18 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Install xmllint
-        run: sudo apt-get install -y curl date
-
-
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: scripts/teeline.sh
 
-      # # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     echo Add other actions to build,
-      #     echo test, and deploy your project.
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v5
