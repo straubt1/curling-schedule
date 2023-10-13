@@ -6,12 +6,11 @@ name: Hourly Query
 on:
   # schedule to run
   schedule:
-    - cron: '*/16 7-21 * * *'
+    - cron: '16 7-22 * * *'
     # This expression will fire at every 16th minute of every hour between 7 am and 10 pm every day.
-    #   */16: Every 16 minutes.
-    #   7-21: Between the 7th and 21st hour (7 am to 10 pm).
+    #   16: At the 16th minute.
+    #   7-22: Between the 7th and 22nd hour (7 am to 10 pm).
     #   * * *: Every day of the month, every month, and every day of the week.
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
