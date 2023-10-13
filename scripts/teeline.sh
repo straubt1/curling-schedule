@@ -21,18 +21,29 @@ esac
 echo $NEXT_DATE
 }
 
+create_date_file () {
+  local NEXT_FILENAME=$1
+
+  if ! test -f ${NEXT_FILENAME}; then
+    echo "File ${NEXT_FILENAME} does not exist, creating it now with CSV headers"
+    echo "Query Date,Available Times" > ${NEXT_FILENAME}
+  fi
+}
+
 get_bookings () {
   local date_offset=$1
 
-  # get date offset in the proper format, i.e. "10-10-2023"
-  NEXT_DATE=$(get_next_date ${date_offset})
+  NEXT_DATE=$(get_next_date ${date_offset}) # get date offset in the proper format, i.e. "10-10-2023"
+  NEXT_FILENAME="${NEXT_DATE}.csv"
+  QUERY_DATE=$(date)
   
+  create_date_file ${NEXT_FILENAME}
   # Get times that are open, returns a string with those times for a single day
   TIMES=`curl -s "https://www.sevenrooms.com/api-yoa/availability/widget/range?venue=teeline&time_slot=17:00&party_size=4&halo_size_interval=24&start_date=${NEXT_DATE}&num_days=1&channel=SEVENROOMS_WIDGET&selected_lang_code=en" | jq -r '.data.availability | keys[] as $k | .[$k] | .[0].times[] | select(.type == "book").time'`
   
   # Replace new lines with "; " since jq doesn't like to do what I ask...
-  TIMES=${TIMES//$'\n'/,}
-  echo "${NEXT_DATE},${TIMES}" >> "${NEXT_DATE}.csv"
+  TIMES=${TIMES//$'\n'/; }
+  echo "${QUERY_DATE},${TIMES}" >> ${NEXT_FILENAME}
 }
 
 # get_bookings 0
