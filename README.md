@@ -1,6 +1,6 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **12-21-2023 01:21:35 AM**
+List the latest availability for the next week, Last Update at **12-21-2023 02:28:06 AM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
@@ -10,4 +10,4 @@ List the latest availability for the next week, Last Update at **12-21-2023 01:2
 |Sunday|12-24-2023||
 |Monday|12-25-2023||
 |Tuesday|12-26-2023||
-File dates/12-27-2023(Wednesday).csv does not exist, creating it now with CSV headers |Wednesday|12-27-2023||
+|Wednesday|12-27-2023||
