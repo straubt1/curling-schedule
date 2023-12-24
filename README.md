@@ -1,6 +1,6 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **12-24-2023 12:26:37 PM**
+List the latest availability for the next week, Last Update at **12-24-2023 01:21:03 PM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
@@ -10,4 +10,4 @@ List the latest availability for the next week, Last Update at **12-24-2023 12:2
 |Wednesday|12-27-2023||
 |Thursday|12-28-2023||
 |Friday|12-29-2023||
-|Saturday|12-30-2023|10:00 AM; 11:30 AM; 1:00 PM; 4:00 PM; 5:30 PM; 8:30 PM|
+|Saturday|12-30-2023|10:00 AM; 11:30 AM; 4:00 PM; 5:30 PM; 7:00 PM; 8:30 PM|
