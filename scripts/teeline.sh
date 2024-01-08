@@ -45,10 +45,10 @@ echo $NEXT_DATE
 create_date_file () {
   local NEXT_FILENAME=$1
 
-  if ! test -f ${NEXT_FILENAME}; then
-    echo "File ${NEXT_FILENAME} does not exist, creating it now with CSV headers"
-    echo "Query Date,Available Times" > ${NEXT_FILENAME}
-  fi
+  # if ! test -f ${NEXT_FILENAME}; then
+  #   echo "File ${NEXT_FILENAME} does not exist, creating it now with CSV headers"
+  #   echo "Query Date,Available Times" > ${NEXT_FILENAME}
+  # fi
 }
 
 get_bookings () {
