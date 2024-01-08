@@ -81,7 +81,7 @@ List the latest availability for the next week, Last Update at **$(TZ=":US/Centr
 | ----------- | ----------- | ----------- |
 EOT
 
-for i in {0..6}
+for i in {0..7}
 do
   line=$(get_bookings $i)
   echo ${line} >> ${SUMMARY_FILENAME}
