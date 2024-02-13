@@ -1,6 +1,6 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **02-13-2024 09:23:21 AM**
+List the latest availability for the next week, Last Update at **02-13-2024 10:29:42 AM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
