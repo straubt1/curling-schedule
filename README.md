@@ -1,6 +1,6 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **03-20-2025 09:34:12 AM**
+List the latest availability for the next week, Last Update at **03-20-2025 10:32:15 AM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
@@ -11,4 +11,4 @@ List the latest availability for the next week, Last Update at **03-20-2025 09:3
 |Monday|03-24-2025||
 |Tuesday|03-25-2025|5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM|
 |Wednesday|03-26-2025|11:30 AM; 1:00 PM; 2:30 PM; 4:00 PM; 4:00 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM|
-|Thursday|03-27-2025|11:30 AM; 1:00 PM; 2:30 PM; 4:00 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM|
+|Thursday|03-27-2025|11:30 AM; 1:00 PM; 2:30 PM; 4:00 PM; 4:00 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 5:30 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 7:00 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM; 8:30 PM|
