@@ -6,7 +6,7 @@ name: Hourly Query
 on:
   # schedule to run
   schedule:
-    - cron: '16 7-22 * * *'
+    - cron: '16 8-18 * * *'
     # This expression will fire at every 16th minute of every hour between 7 am and 10 pm every day.
     #   16: At the 16th minute.
     #   7-22: Between the 7th and 22nd hour (7 am to 10 pm).
