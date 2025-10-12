@@ -1,12 +1,10 @@
 package main
 
 import (
-	"encoding/csv"
 	"flag"
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -57,16 +55,5 @@ func main() {
 			log.Fatalf("write line: %v", err)
 		}
 
-		// Also write per-date CSV in dates/ similar to script
-		if err := os.MkdirAll("dates", 0755); err == nil {
-			csvPath := filepath.Join("dates", fmt.Sprintf("%s(%s).csv", dateStr, dayName))
-			cf, err := os.OpenFile(csvPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-			if err == nil {
-				w := csv.NewWriter(cf)
-				_ = w.Write([]string{time.Now().In(loc).Format("01-02-2006 03:04:05 PM"), times})
-				w.Flush()
-				cf.Close()
-			}
-		}
 	}
 }

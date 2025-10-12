@@ -1,0 +1,40 @@
+version: '3'
+
+# Simple Taskfile to build the teeline command for multiple platforms
+# - Builds linux/amd64 and darwin/arm64 into bin/<os>_<arch>/teeline
+# - Provides a local build and clean task as helpers
+
+vars:
+  bin_dir: "bin"
+  cmd_path: "./cmd/teeline"
+  binary: "teeline"
+
+tasks:
+  build-local:
+    desc: Build the binary for the current platform
+    cmds:
+      - mkdir -p {{.bin_dir}}
+      - go build -o {{.bin_dir}}/{{.binary}} {{.cmd_path}}
+
+  build-linux_amd64:
+    desc: Build linux/amd64
+    cmds:
+      - mkdir -p {{.bin_dir}}/linux_amd64
+      - env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o {{.bin_dir}}/linux_amd64/{{.binary}} {{.cmd_path}}
+
+  build-darwin_arm64:
+    desc: Build darwin/arm64
+    cmds:
+      - mkdir -p {{.bin_dir}}/darwin_arm64
+      - env CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -o {{.bin_dir}}/darwin_arm64/{{.binary}} {{.cmd_path}}
+
+  build:
+    desc: Build all cross targets (linux_amd64 + darwin_arm64)
+    deps:
+      - build-linux_amd64
+      - build-darwin_arm64
+
+  clean:
+    desc: Remove generated binaries
+    cmds:
+      - rm -rf {{.bin_dir}}
