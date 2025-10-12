@@ -59,10 +59,11 @@ func GetAvailabilityTimes(date string) (string, error) {
 		avail = root
 	}
 
-	timesSet := map[string]struct{}{}
-	collectTimes(avail, timesSet)
+	// Count occurrences of each timeslot (some payloads list duplicates).
+	timesCount := map[string]int{}
+	collectTimes(avail, timesCount)
 
-	if len(timesSet) == 0 {
+	if len(timesCount) == 0 {
 		return "", nil
 	}
 
@@ -73,8 +74,8 @@ func GetAvailabilityTimes(date string) (string, error) {
 		ok  bool // whether parse succeeded
 	}
 
-	arr := make([]ts, 0, len(timesSet))
-	for k := range timesSet {
+	arr := make([]ts, 0, len(timesCount))
+	for k := range timesCount {
 		if m, ok := parseToMinutes(k); ok {
 			arr = append(arr, ts{raw: k, min: m, ok: true})
 		} else {
@@ -97,7 +98,7 @@ func GetAvailabilityTimes(date string) (string, error) {
 
 	out := make([]string, 0, len(arr))
 	for _, e := range arr {
-		out = append(out, e.raw)
+		out = append(out, fmt.Sprintf("%s (%d)", e.raw, timesCount[e.raw]))
 	}
 	return strings.Join(out, "; "), nil
 }
@@ -146,13 +147,13 @@ func parseToMinutes(s string) (int, bool) {
 
 // collectTimes recursively walks nested maps/slices looking for objects with a
 // "times" key containing an array of {type,time} objects.
-func collectTimes(v any, set map[string]struct{}) {
+func collectTimes(v any, counts map[string]int) {
 	switch x := v.(type) {
 	case nil:
 		return
 	case []any:
 		for _, el := range x {
-			collectTimes(el, set)
+			collectTimes(el, counts)
 		}
 	case map[string]any:
 		// If there is a "times" key with an array, process it.
@@ -163,15 +164,19 @@ func collectTimes(v any, set map[string]struct{}) {
 						typ, _ := itm["type"].(string)
 						tm, _ := itm["time"].(string)
 						if typ == "book" && tm != "" {
-							set[tm] = struct{}{}
+							counts[tm]++
 						}
 					}
 				}
 			}
 		}
-		// Recurse into all values in the map
-		for _, val := range x {
-			collectTimes(val, set)
+		// Recurse into all values in the map, but skip the already-processed
+		// "times" key to avoid double-counting.
+		for k, val := range x {
+			if k == "times" {
+				continue
+			}
+			collectTimes(val, counts)
 		}
 	default:
 		// other primitive types ignored

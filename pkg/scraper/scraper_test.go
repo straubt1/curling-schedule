@@ -24,7 +24,7 @@ func TestGetAvailabilityTimes_HappyPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
-	if times != "17:00; 18:00" {
+	if times != "17:00 (1); 18:00 (1)" {
 		t.Fatalf("unexpected times: %q", times)
 	}
 }
@@ -46,7 +46,8 @@ func TestGetAvailabilityTimes_DedupeAndSort(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
-	if times != "17:00; 18:00" {
+	// 18:00 appears twice in the payload, expect counts to reflect that.
+	if times != "17:00 (1); 18:00 (2)" {
 		t.Fatalf("unexpected times: %q", times)
 	}
 }
