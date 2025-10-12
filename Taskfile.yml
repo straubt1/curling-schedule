@@ -1,13 +1,13 @@
 version: '3'
 
-# Simple Taskfile to build the teeline command for multiple platforms
-# - Builds linux/amd64 and darwin/arm64 into bin/<os>_<arch>/teeline
+# Simple Taskfile to build the scheduler command for multiple platforms
+# - Builds linux/amd64 and darwin/arm64 into bin/<os>_<arch>/scheduler
 # - Provides a local build and clean task as helpers
 
 vars:
   bin_dir: "bin"
-  cmd_path: "./cmd/teeline"
-  binary: "teeline"
+  cmd_path: "./cmd/scheduler"
+  binary: "scheduler"
 
 tasks:
   build-local:

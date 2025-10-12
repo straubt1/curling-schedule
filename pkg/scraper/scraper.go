@@ -12,13 +12,19 @@ import (
 )
 
 // BaseURL is the API endpoint base and is replaceable in tests.
+// BaseURL is the API endpoint base and is replaceable in tests.
 var BaseURL = "https://www.sevenrooms.com/api-yoa/availability/widget/range"
+
+// Venue is the venue identifier used in the query. It defaults to the
+// placeholder value "scheduler" but can be overridden by callers (for
+// example, from a flag or environment variable in the CLI).
+var Venue = "teeline"
 
 // GetAvailabilityTimes queries the SevenRooms API for a given date in MM-DD-YYYY
 // and returns a semicolon-separated list of available times (type=="book").
 func GetAvailabilityTimes(date string) (string, error) {
 	q := url.Values{}
-	q.Set("venue", "teeline")
+	q.Set("venue", Venue)
 	q.Set("time_slot", "16:00")
 	q.Set("party_size", "4")
 	q.Set("halo_size_interval", "24")
@@ -37,6 +43,16 @@ func GetAvailabilityTimes(date string) (string, error) {
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("read body: %w", err)
+	}
+
+	// Treat non-200 responses as errors so callers can log and act accordingly.
+	if resp.StatusCode != http.StatusOK {
+		// Include a truncated snippet of the body for debugging.
+		snippet := string(body)
+		if len(snippet) > 512 {
+			snippet = snippet[:512]
+		}
+		return "", fmt.Errorf("unexpected status %d from %s: %s", resp.StatusCode, full, snippet)
 	}
 
 	// Unmarshal to a generic structure and walk it to extract any "times" arrays.
@@ -98,7 +114,14 @@ func GetAvailabilityTimes(date string) (string, error) {
 
 	out := make([]string, 0, len(arr))
 	for _, e := range arr {
-		out = append(out, fmt.Sprintf("%s (%d)", e.raw, timesCount[e.raw]))
+		if timesCount[e.raw] == 1 {
+			out = append(out, fmt.Sprintf("%s (%d Sheet)", e.raw, timesCount[e.raw]))
+
+		} else if timesCount[e.raw] > 1 {
+			out = append(out, fmt.Sprintf("%s (%d Sheets)", e.raw, timesCount[e.raw]))
+		} else {
+			// do nothing
+		}
 	}
 	return strings.Join(out, "; "), nil
 }
