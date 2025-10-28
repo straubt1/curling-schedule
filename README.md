@@ -1,10 +1,9 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **10-27-2025 05:31:11 PM**
+List the latest availability for the next week, Last Update at **10-28-2025 03:41:11 AM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
-|Monday|10-27-2025|7:00 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
 |Tuesday|10-28-2025|8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
 |Wednesday|10-29-2025|11:30 AM (3 Sheets)<br>1:00 PM (3 Sheets)<br>2:30 PM (3 Sheets)<br>4:00 PM (3 Sheets)<br>5:30 PM (3 Sheets)<br>7:00 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
 |Thursday|10-30-2025|11:30 AM (3 Sheets)<br>1:00 PM (3 Sheets)<br>2:30 PM (3 Sheets)<br>4:00 PM (3 Sheets)<br>5:30 PM (3 Sheets)<br>7:00 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
@@ -12,3 +11,4 @@ List the latest availability for the next week, Last Update at **10-27-2025 05:3
 |Saturday|11-01-2025|11:30 AM (3 Sheets)<br>2:30 PM (3 Sheets)<br>4:00 PM (3 Sheets)<br>5:30 PM (3 Sheets)<br>7:00 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
 |Sunday|11-02-2025|11:30 AM (3 Sheets)<br>1:00 PM (3 Sheets)<br>2:30 PM (3 Sheets)<br>4:00 PM (3 Sheets)<br>5:30 PM (3 Sheets)<br>7:00 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
 |Monday|11-03-2025|5:30 PM (3 Sheets)<br>8:30 PM (3 Sheets)<br>10:00 PM (3 Sheets)|
+|Tuesday|11-04-2025||
