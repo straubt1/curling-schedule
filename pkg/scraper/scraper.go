@@ -114,14 +114,16 @@ func GetAvailabilityTimes(date string) (string, error) {
 
 	out := make([]string, 0, len(arr))
 	for _, e := range arr {
-		if timesCount[e.raw] == 1 {
-			out = append(out, fmt.Sprintf("%s (%d Sheet)", e.raw, timesCount[e.raw]))
+		// if timesCount[e.raw] == 1 {
+		// 	out = append(out, fmt.Sprintf("%s (%d Sheet)", e.raw, timesCount[e.raw]))
 
-		} else if timesCount[e.raw] > 1 {
-			out = append(out, fmt.Sprintf("%s (%d Sheets)", e.raw, timesCount[e.raw]))
-		} else {
-			// do nothing
-		}
+		// } else if timesCount[e.raw] > 1 {
+		// 	out = append(out, fmt.Sprintf("%s (%d Sheets)", e.raw, timesCount[e.raw]))
+		// } else {
+		// 	// do nothing
+		// }
+		// Remove sheets for now, sevenrooms always seems to return 3 sheets per time
+		out = append(out, e.raw)
 	}
 	return strings.Join(out, "; "), nil
 }
