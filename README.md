@@ -1,10 +1,9 @@
 # Ice Availability
 
-List the latest availability for the next week, Last Update at **01-20-2026 04:24:45 PM**
+List the latest availability for the next week, Last Update at **01-21-2026 02:26:04 AM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
-|Tuesday|01-20-2026|8:30 PM<br>10:00 PM|
 |Wednesday|01-21-2026|11:30 AM<br>1:00 PM<br>2:30 PM<br>4:00 PM<br>5:30 PM<br>7:00 PM<br>8:30 PM<br>10:00 PM|
 |Thursday|01-22-2026|11:30 AM<br>1:00 PM<br>2:30 PM<br>4:00 PM<br>10:00 PM|
 |Friday|01-23-2026|11:30 AM<br>1:00 PM<br>2:30 PM<br>10:00 PM|
@@ -12,3 +11,4 @@ List the latest availability for the next week, Last Update at **01-20-2026 04:2
 |Sunday|01-25-2026|11:30 AM<br>1:00 PM<br>2:30 PM<br>4:00 PM<br>5:30 PM<br>7:00 PM<br>8:30 PM<br>10:00 PM|
 |Monday|01-26-2026|5:30 PM<br>8:30 PM<br>10:00 PM|
 |Tuesday|01-27-2026|7:00 PM<br>8:30 PM<br>10:00 PM|
+|Wednesday|01-28-2026||
