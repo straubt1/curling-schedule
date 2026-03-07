@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+
+const bookingUrl = 'https://www.sevenrooms.com/reservations/teeline';
+const dataUrl = import.meta.env.BASE_URL.replace(/\/?$/, '/') + 'availability.json';
+---
+
+<Layout title="Curling Ice Availability">
+  <div class="container">
+    <Header />
+    <div class="actions">
+      <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="book-btn">Book Ice &rarr;</a>
+    </div>
+    <div id="grid" class="grid">
+      <p class="loading">Loading availability&hellip;</p>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">!</span>
+      <p>Times shown are a snapshot and may not reflect real-time availability &mdash; when in doubt double-check on the booking site or with TeeLine before making plans.</p>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ dataUrl }}>
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  async function load() {
+    const grid = document.getElementById('grid');
+    try {
+      const res = await fetch(dataUrl);
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+
+      // Update the "last updated" timestamp in the header
+      const timeEl = document.getElementById('last-updated');
+      if (timeEl) {
+        const fmt = new Date(data.lastUpdated).toLocaleString('en-US', {
+          timeZone: 'America/Chicago',
+          dateStyle: 'long',
+          timeStyle: 'short',
+        });
+        timeEl.textContent = `${fmt} CT`;
+        timeEl.setAttribute('datetime', data.lastUpdated);
+      }
+
+      // Render day cards
+      grid.innerHTML = data.availability.map(day => {
+        const has = day.times.length > 0;
+        const body = has
+          ? `<ul class="times">${day.times.map(t => `<li class="chip">${esc(t)}</li>`).join('')}</ul>`
+          : `<p class="no-ice">No availability</p>`;
+        return `<div class="card${has ? '' : ' empty'}">
+          <div class="card-header">
+            <span class="day-name">${esc(day.dayName)}</span>
+            <span class="date">${esc(day.date)}</span>
+          </div>
+          <div class="card-body">${body}</div>
+        </div>`;
+      }).join('');
+    } catch {
+      grid.innerHTML = `<p class="load-error">Could not load availability data &mdash; try refreshing.</p>`;
+    }
+  }
+
+  load();
+</script>
+
+<!-- Card styles must be global since the cards are rendered by JS -->
+<style is:global>
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px var(--shadow-sm), 0 1px 2px var(--shadow-sm);
+    transition: box-shadow 0.15s ease;
+  }
+
+  .card:not(.empty):hover {
+    box-shadow: 0 4px 12px var(--shadow-md);
+  }
+
+  .card-header {
+    background: var(--accent);
+    color: white;
+    padding: 0.875rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .card.empty .card-header {
+    background: var(--card-header-empty);
+  }
+
+  .day-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .date {
+    font-size: 0.78rem;
+    opacity: 0.8;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-body {
+    padding: 0.875rem 1rem;
+    min-height: 72px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .times {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .no-ice {
+    color: var(--no-ice);
+    font-size: 0.85rem;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
+
+  .loading, .load-error {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+</style>
+
+<style>
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .actions {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .book-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+  }
+
+  .book-btn:hover {
+    background: var(--accent-hover);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1rem;
+  }
+
+  .callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    background: var(--callout-bg);
+    border: 1px solid var(--callout-border);
+    border-left: 4px solid var(--callout-accent);
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    color: var(--callout-text);
+    font-size: 0.85rem;
+  }
+
+  .callout-icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: var(--callout-accent);
+    color: white;
+    font-weight: 800;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.05rem;
+  }
+</style>

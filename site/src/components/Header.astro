@@ -1,0 +1,35 @@
+---
+// lastUpdated is populated at runtime by the client-side fetch in index.astro
+---
+
+<header>
+  <h1>Ice Availability</h1>
+  <p class="subtitle">TeeLine &mdash; next 7 days</p>
+  <p class="updated">Last updated: <time id="last-updated" datetime="">loading&hellip;</time></p>
+</header>
+
+<style>
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .updated {
+    margin-top: 0.5rem;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+</style>

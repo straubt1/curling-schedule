@@ -1,37 +1,25 @@
-# This is a basic workflow to help you get started with Actions
+name: Update Availability Data
 
-name: Hourly Query
-
-# Controls when the workflow will run
 on:
-  # schedule to run
   schedule:
+    # Every 2 hours at :16 from 8 AM to 10 PM
     - cron: '16 8-22/2 * * *'
-    # This expression will fire at the 16th minute every 2 hours between 8 am and 10 pm every day.
-    #   16: At the 16th minute.
-    #   8-22/2: Every 2 hours from 08:00 through 22:00 (8,10,12,14,16,18,20,22).
-    #   * * *: Every day of the month, every month, and every day of the week.
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: write
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  update-data:
     runs-on: ubuntu-latest
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Runs the prebuilt linux/amd64 binary from bin/
-      - name: Run scheduler binary
-        run: ./bin/linux_amd64/scheduler
+      - name: Fetch availability
+        run: ./bin/linux_amd64/scheduler --json-out site/public/availability.json
 
-      # Commit all changed files back to the repository
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Commit updated data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update availability data"
+          file_pattern: site/public/availability.json
