@@ -17,7 +17,7 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main (for scheduler binary)
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
           ref: main
@@ -28,19 +28,10 @@ jobs:
           git config user.name "GitHub Actions"
 
       - name: Fetch availability
-        run: ./bin/linux_amd64/scheduler --json-out /tmp/availability.json --out README.md
+        run: ./bin/linux_amd64/scheduler --json-out availability.json --out README.md
 
-      - name: Commit README to main
+      - name: Commit changes
         run: |
-          git add README.md
-          git diff --staged --quiet && echo "No README changes" || \
+          git add availability.json README.md
+          git diff --staged --quiet && echo "No changes to commit" || \
             (git commit -m "chore: update availability data" && git push origin main)
-
-      - name: Push availability.json to data branch
-        run: |
-          git fetch origin data
-          git checkout data
-          cp /tmp/availability.json availability.json
-          git add availability.json
-          git diff --staged --quiet && echo "No data changes" || \
-            (git commit -m "chore: update availability data" && git push origin data)

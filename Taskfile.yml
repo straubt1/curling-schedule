@@ -35,9 +35,9 @@ tasks:
       - build-darwin_arm64
 
   generate-data:
-    desc: Fetch availability and update README.md + /tmp/availability.json
+    desc: Fetch availability and update README.md + availability.json
     cmds:
-      - ./bin/darwin_arm64/{{.binary}} --json-out /tmp/availability.json --out README.md
+      - ./bin/darwin_arm64/{{.binary}} --json-out availability.json --out README.md
 
   site-install:
     desc: Install Astro npm dependencies
