@@ -34,3 +34,11 @@ override.tf.json
 terraform.rc
 
 # *.csv
+
+# Astro / Node
+site/node_modules/
+site/dist/
+site/.astro/
+
+# site/public/availability.json is intentionally committed (updated by cadence workflow)
+site/src/data/availability.json

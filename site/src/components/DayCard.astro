@@ -1,0 +1,100 @@
+---
+interface Props {
+  day: {
+    dayName: string;
+    date: string;
+    times: string[];
+  };
+}
+
+const { day } = Astro.props;
+const hasAvailability = day.times.length > 0;
+---
+
+<div class:list={['card', { empty: !hasAvailability }]}>
+  <div class="card-header">
+    <span class="day-name">{day.dayName}</span>
+    <span class="date">{day.date}</span>
+  </div>
+  <div class="card-body">
+    {hasAvailability ? (
+      <ul class="times">
+        {day.times.map(t => <li class="chip">{t}</li>)}
+      </ul>
+    ) : (
+      <p class="no-ice">No availability</p>
+    )}
+  </div>
+</div>
+
+<style>
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px var(--shadow-sm), 0 1px 2px var(--shadow-sm);
+    transition: box-shadow 0.15s ease;
+  }
+
+  .card:not(.empty):hover {
+    box-shadow: 0 4px 12px var(--shadow-md);
+  }
+
+  .card-header {
+    background: var(--accent);
+    color: white;
+    padding: 0.875rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .card.empty .card-header {
+    background: var(--card-header-empty);
+  }
+
+  .day-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .date {
+    font-size: 0.78rem;
+    opacity: 0.8;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-body {
+    padding: 0.875rem 1rem;
+    min-height: 72px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .times {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .no-ice {
+    color: var(--no-ice);
+    font-size: 0.85rem;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    align-self: center;
+  }
+</style>
