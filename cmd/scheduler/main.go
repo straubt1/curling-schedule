@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -24,6 +25,7 @@ type AvailabilityOutput struct {
 }
 
 func main() {
+	out := flag.String("out", "", "markdown README output file (optional)")
 	jsonOut := flag.String("json-out", "", "JSON output file path")
 	days := flag.Int("days", 7, "how many days out to query (inclusive)")
 	venue := flag.String("venue", "", "sevenrooms venue id (overrides default)")
@@ -46,6 +48,23 @@ func main() {
 		scraper.Venue = *venue
 	}
 
+	var mdFile *os.File
+	if *out != "" {
+		mdFile, err = os.Create(*out)
+		if err != nil {
+			log.Fatalf("create output: %v", err)
+		}
+		defer mdFile.Close()
+
+		header := fmt.Sprintf(
+			"# Curling Schedule\n\nView ice availability at TeeLine: **https://straubt1.github.io/curling-schedule**\n\nLast Update at **%s**\n\n| Day         | Date        | Times       |\n| ----------- | ----------- | ----------- |\n",
+			now.Format("01-02-2006 03:04:05 PM"),
+		)
+		if _, err := mdFile.WriteString(header); err != nil {
+			log.Fatalf("write header: %v", err)
+		}
+	}
+
 	var availability []DayAvailability
 	for i := 0; i <= *days; i++ {
 		date := now.AddDate(0, 0, i)
@@ -55,6 +74,14 @@ func main() {
 		times, err := scraper.GetAvailabilityTimes(dateStr)
 		if err != nil {
 			log.Printf("warning: failed getting times for %s: %v", dateStr, err)
+		}
+
+		if mdFile != nil {
+			timesDisplay := strings.ReplaceAll(times, "; ", "<br>")
+			line := fmt.Sprintf("|%s|%s|%s|\n", dayName, dateStr, timesDisplay)
+			if _, err := mdFile.WriteString(line); err != nil {
+				log.Fatalf("write line: %v", err)
+			}
 		}
 
 		var timesList []string
