@@ -35,9 +35,9 @@ tasks:
       - build-darwin_arm64
 
   generate-data:
-    desc: Fetch availability and write site/public/availability.json
+    desc: Fetch availability and write /tmp/availability.json
     cmds:
-      - ./bin/darwin_arm64/{{.binary}} --json-out site/public/availability.json
+      - ./bin/darwin_arm64/{{.binary}} --json-out /tmp/availability.json
 
   site-install:
     desc: Install Astro npm dependencies
