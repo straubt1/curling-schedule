@@ -15,6 +15,7 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     <div id="grid" class="grid">
       <p class="loading">Loading availability&hellip;</p>
     </div>
+    <p class="updated">Last updated: <a href="https://raw.githubusercontent.com/straubt1/curling-schedule/main/availability.json" target="_blank" rel="noopener noreferrer"><time id="last-updated" datetime="">loading&hellip;</time></a></p>
     <div class="callout">
       <span class="callout-icon">!</span>
       <p>Times shown are a snapshot and may not reflect real-time availability &mdash; when in doubt double-check on the booking site or with TeeLine before making plans.</p>
@@ -119,9 +120,10 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
 
   .times {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.4rem;
+    width: 100%;
   }
 
   .chip {
@@ -133,6 +135,7 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     border-radius: 9999px;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+    text-align: center;
   }
 
   .no-ice {
@@ -182,6 +185,19 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 1rem;
+  }
+
+  .updated {
+    margin-top: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .updated a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .callout {
