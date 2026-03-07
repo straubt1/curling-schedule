@@ -3,6 +3,8 @@ name: Deploy Site
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - 'site/**'
       - '!site/src/data/**'

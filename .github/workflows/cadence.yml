@@ -2,8 +2,12 @@ name: Update Availability Data
 
 on:
   schedule:
-    # Every 2 hours at :16 from 8 AM to 10 PM
-    - cron: '16 8-22/2 * * *'
+    # Every hour from 6 AM to midnight Central time.
+    # Covers both CST (UTC-6) and CDT (UTC-5) year-round:
+    #   6 AM CDT = 11:00 UTC, midnight CDT = 05:00 UTC
+    #   6 AM CST = 12:00 UTC, midnight CST = 06:00 UTC
+    - cron: '0 11-23 * * *'
+    - cron: '0 0-6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -13,13 +17,21 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main (for scheduler binary)
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Fetch availability
-        run: ./bin/linux_amd64/scheduler --json-out site/public/availability.json
+        run: ./bin/linux_amd64/scheduler --json-out /tmp/availability.json
 
-      - name: Commit updated data
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: update availability data"
-          file_pattern: site/public/availability.json
+      - name: Push to data branch
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git fetch origin data
+          git checkout data
+          cp /tmp/availability.json availability.json
+          git add availability.json
+          git diff --staged --quiet && echo "No changes to commit" || \
+            (git commit -m "chore: update availability data" && git push origin data)
