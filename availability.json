@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T19:34:17-05:00",
+  "lastUpdated": "2026-03-20T20:37:23-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
@@ -13,7 +13,6 @@
       "dayName": "Saturday",
       "date": "03-21-2026",
       "times": [
-        "1:00 PM",
         "10:00 PM"
       ]
     },
