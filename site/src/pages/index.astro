@@ -12,15 +12,15 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     <div class="actions">
       <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="book-btn">Book Ice &rarr;</a>
     </div>
-    <div id="grid" class="grid">
-      <p class="loading">Loading availability&hellip;</p>
-    </div>
-    <p class="updated">Last updated: <a href="https://raw.githubusercontent.com/straubt1/curling-schedule/main/availability.json" target="_blank" rel="noopener noreferrer"><time id="last-updated" datetime="">loading&hellip;</time></a></p>
     <div class="callout">
       <span class="callout-icon">!</span>
       <p>Times shown are a snapshot and may not reflect real-time availability &mdash; when in doubt double-check on the booking site or with TeeLine before making plans.</p>
     </div>
   </div>
+    <div id="grid" class="grid">
+      <p class="loading">Loading availability&hellip;</p>
+    </div>
+    <p class="updated">Last updated: <a href="https://raw.githubusercontent.com/straubt1/curling-schedule/main/availability.json" target="_blank" rel="noopener noreferrer"><time id="last-updated" datetime="">loading&hellip;</time></a></p>
 </Layout>
 
 <script define:vars={{ dataUrl }}>
