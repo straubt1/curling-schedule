@@ -1,12 +1,7 @@
 {
-  "lastUpdated": "2026-03-22T23:49:06-05:00",
+  "lastUpdated": "2026-03-23T00:36:00-05:00",
   "timezone": "America/Chicago",
   "availability": [
-    {
-      "dayName": "Sunday",
-      "date": "03-22-2026",
-      "times": []
-    },
     {
       "dayName": "Monday",
       "date": "03-23-2026",
@@ -78,6 +73,11 @@
         "8:30 PM",
         "10:00 PM"
       ]
+    },
+    {
+      "dayName": "Monday",
+      "date": "03-30-2026",
+      "times": []
     }
   ]
 }
