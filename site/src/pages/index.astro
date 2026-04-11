@@ -53,9 +53,9 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
 
       // Render day cards
       grid.innerHTML = data.availability.map(day => {
-        const has = day.times.length > 0;
+        const has = day.availability.length > 0;
         const body = has
-          ? `<ul class="times">${day.times.map(t => `<li class="chip">${esc(t)}</li>`).join('')}</ul>`
+          ? `<ul class="times">${day.availability.map(s => `<li class="chip${s.sheets === '2+' ? ' chip--multiple' : ''}">${esc(s.time)}</li>`).join('')}</ul>`
           : `<p class="no-ice">No availability</p>`;
         return `<div class="card${has ? '' : ' empty'}">
           <div class="card-header">
@@ -138,6 +138,18 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     text-align: center;
   }
 
+  .chip--multiple {
+    background: #dcfce7;
+    color: #15803d;
+    outline: 1.5px solid #86efac;
+  }
+
+  .chip--multiple::after {
+    content: ' 2+';
+    font-size: 0.65rem;
+    opacity: 0.8;
+  }
+
   .no-ice {
     color: var(--no-ice);
     font-size: 0.85rem;
@@ -205,6 +217,7 @@ const dataUrl = 'https://raw.githubusercontent.com/straubt1/curling-schedule/mai
     align-items: flex-start;
     gap: 0.75rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     background: var(--callout-bg);
     border: 1px solid var(--callout-border);
     border-left: 4px solid var(--callout-accent);

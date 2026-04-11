@@ -12,10 +12,15 @@ import (
 	"github.com/straubt1/curling-schedule/pkg/scraper"
 )
 
+type SlotOutput struct {
+	Time   string `json:"time"`
+	Sheets string `json:"sheets"`
+}
+
 type DayAvailability struct {
-	DayName string   `json:"dayName"`
-	Date    string   `json:"date"`
-	Times   []string `json:"times"`
+	DayName      string       `json:"dayName"`
+	Date         string       `json:"date"`
+	Availability []SlotOutput `json:"availability"`
 }
 
 type AvailabilityOutput struct {
@@ -35,15 +40,12 @@ func main() {
 		log.Fatal("--json-out is required")
 	}
 
-	// Use the IANA timezone for US Central. If the zone data isn't available,
-	// fall back to a fixed -6h offset (approximate Central without DST).
 	loc, err := time.LoadLocation("America/Chicago")
 	if err != nil {
 		loc = time.FixedZone("US/Central", -6*60*60)
 	}
 	now := time.Now().In(loc)
 
-	// If a venue was supplied via flag, override the scraper package default.
 	if *venue != "" {
 		scraper.Venue = *venue
 	}
@@ -71,29 +73,32 @@ func main() {
 		dayName := date.Format("Monday")
 		dateStr := date.Format("01-02-2006")
 
-		times, err := scraper.GetAvailabilityTimes(dateStr)
+		slots, err := scraper.GetAvailability(dateStr)
 		if err != nil {
 			log.Printf("warning: failed getting times for %s: %v", dateStr, err)
+			slots = nil
 		}
 
 		if mdFile != nil {
-			timesDisplay := strings.ReplaceAll(times, "; ", "<br>")
+			timeParts := make([]string, 0, len(slots))
+			for _, s := range slots {
+				timeParts = append(timeParts, s.Time)
+			}
+			timesDisplay := strings.Join(timeParts, "<br>")
 			line := fmt.Sprintf("|%s|%s|%s|\n", dayName, dateStr, timesDisplay)
 			if _, err := mdFile.WriteString(line); err != nil {
 				log.Fatalf("write line: %v", err)
 			}
 		}
 
-		var timesList []string
-		if times != "" {
-			timesList = strings.Split(times, "; ")
-		} else {
-			timesList = []string{}
+		slotOutputs := make([]SlotOutput, 0, len(slots))
+		for _, s := range slots {
+			slotOutputs = append(slotOutputs, SlotOutput{Time: s.Time, Sheets: s.Sheets})
 		}
 		availability = append(availability, DayAvailability{
-			DayName: dayName,
-			Date:    dateStr,
-			Times:   timesList,
+			DayName:      dayName,
+			Date:         dateStr,
+			Availability: slotOutputs,
 		})
 	}
 

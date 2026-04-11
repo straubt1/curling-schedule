@@ -12,7 +12,6 @@ import (
 )
 
 // BaseURL is the API endpoint base and is replaceable in tests.
-// BaseURL is the API endpoint base and is replaceable in tests.
 var BaseURL = "https://www.sevenrooms.com/api-yoa/availability/widget/range"
 
 // Venue is the venue identifier used in the query. It defaults to the
@@ -20,78 +19,40 @@ var BaseURL = "https://www.sevenrooms.com/api-yoa/availability/widget/range"
 // example, from a flag or environment variable in the CLI).
 var Venue = "teeline"
 
-// GetAvailabilityTimes queries the SevenRooms API for a given date in MM-DD-YYYY
-// and returns a semicolon-separated list of available times (type=="book").
-func GetAvailabilityTimes(date string) (string, error) {
-	q := url.Values{}
-	q.Set("venue", Venue)
-	q.Set("time_slot", "16:00")
-	q.Set("party_size", "4")
-	q.Set("halo_size_interval", "24")
-	q.Set("start_date", date)
-	q.Set("num_days", "1")
-	q.Set("channel", "SEVENROOMS_WIDGET")
-	q.Set("selected_lang_code", "en")
+// TimeSlot represents a single available time slot and how many sheets
+// are available ("1" or "2+").
+type TimeSlot struct {
+	Time   string
+	Sheets string // "1" or "2+"
+}
 
-	full := BaseURL + "?" + q.Encode()
-	resp, err := http.Get(full)
+// GetAvailability queries the SevenRooms API twice for a given date (MM-DD-YYYY):
+// once with party_size=4 and once with party_size=20. It returns a sorted slice
+// of TimeSlot values. Slots found in both responses get Sheets="2+"; slots found
+// only in the party_size=4 response get Sheets="1".
+func GetAvailability(date string) ([]TimeSlot, error) {
+	setSmall, err := fetchTimesSet(date, "4")
 	if err != nil {
-		return "", fmt.Errorf("request failed: %w", err)
+		return nil, fmt.Errorf("party_size=4 query: %w", err)
 	}
-	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	setLarge, err := fetchTimesSet(date, "20")
 	if err != nil {
-		return "", fmt.Errorf("read body: %w", err)
+		return nil, fmt.Errorf("party_size=20 query: %w", err)
 	}
 
-	// Treat non-200 responses as errors so callers can log and act accordingly.
-	if resp.StatusCode != http.StatusOK {
-		// Include a truncated snippet of the body for debugging.
-		snippet := string(body)
-		if len(snippet) > 512 {
-			snippet = snippet[:512]
-		}
-		return "", fmt.Errorf("unexpected status %d from %s: %s", resp.StatusCode, full, snippet)
+	if len(setSmall) == 0 {
+		return []TimeSlot{}, nil
 	}
 
-	// Unmarshal to a generic structure and walk it to extract any "times" arrays.
-	var root any
-	if err := json.Unmarshal(body, &root); err != nil {
-		return "", fmt.Errorf("unmarshal: %w", err)
-	}
-
-	// Navigate to root.data.availability if present; otherwise search whole document.
-	var avail any
-	if m, ok := root.(map[string]any); ok {
-		if d, ok := m["data"]; ok {
-			if dm, ok := d.(map[string]any); ok {
-				avail = dm["availability"]
-			}
-		}
-	}
-	if avail == nil {
-		// fallback to searching whole document
-		avail = root
-	}
-
-	// Count occurrences of each timeslot (some payloads list duplicates).
-	timesCount := map[string]int{}
-	collectTimes(avail, timesCount)
-
-	if len(timesCount) == 0 {
-		return "", nil
-	}
-
-	// Prepare slice and sort by parsed time-of-day when possible.
 	type ts struct {
 		raw string
-		min int  // minutes since midnight
-		ok  bool // whether parse succeeded
+		min int
+		ok  bool
 	}
 
-	arr := make([]ts, 0, len(timesCount))
-	for k := range timesCount {
+	arr := make([]ts, 0, len(setSmall))
+	for k := range setSmall {
 		if m, ok := parseToMinutes(k); ok {
 			arr = append(arr, ts{raw: k, min: m, ok: true})
 		} else {
@@ -105,27 +66,81 @@ func GetAvailabilityTimes(date string) (string, error) {
 			return a.min < b.min
 		}
 		if a.ok != b.ok {
-			// Parsed times come before unparsed ones
 			return a.ok
 		}
-		// fallback to lexical order
 		return a.raw < b.raw
 	})
 
-	out := make([]string, 0, len(arr))
+	out := make([]TimeSlot, 0, len(arr))
 	for _, e := range arr {
-		// if timesCount[e.raw] == 1 {
-		// 	out = append(out, fmt.Sprintf("%s (%d Sheet)", e.raw, timesCount[e.raw]))
-
-		// } else if timesCount[e.raw] > 1 {
-		// 	out = append(out, fmt.Sprintf("%s (%d Sheets)", e.raw, timesCount[e.raw]))
-		// } else {
-		// 	// do nothing
-		// }
-		// Remove sheets for now, sevenrooms always seems to return 3 sheets per time
-		out = append(out, e.raw)
+		sheets := "1"
+		if setLarge[e.raw] {
+			sheets = "2+"
+		}
+		out = append(out, TimeSlot{Time: e.raw, Sheets: sheets})
 	}
-	return strings.Join(out, "; "), nil
+	return out, nil
+}
+
+// fetchTimesSet queries the SevenRooms API for the given date and party size,
+// returning a set of available time strings (type=="book").
+func fetchTimesSet(date, partySize string) (map[string]bool, error) {
+	q := url.Values{}
+	q.Set("venue", Venue)
+	q.Set("time_slot", "16:00")
+	q.Set("party_size", partySize)
+	q.Set("halo_size_interval", "32")
+	q.Set("start_date", date)
+	q.Set("num_days", "1")
+	q.Set("channel", "SEVENROOMS_WIDGET")
+	q.Set("selected_lang_code", "en")
+
+	full := BaseURL + "?" + q.Encode()
+	resp, err := http.Get(full)
+	if err != nil {
+		return nil, fmt.Errorf("request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("read body: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		snippet := string(body)
+		if len(snippet) > 512 {
+			snippet = snippet[:512]
+		}
+		return nil, fmt.Errorf("unexpected status %d from %s: %s", resp.StatusCode, full, snippet)
+	}
+
+	var root any
+	if err := json.Unmarshal(body, &root); err != nil {
+		return nil, fmt.Errorf("unmarshal: %w", err)
+	}
+
+	// Navigate to root.data.availability if present; otherwise search whole document.
+	var avail any
+	if m, ok := root.(map[string]any); ok {
+		if d, ok := m["data"]; ok {
+			if dm, ok := d.(map[string]any); ok {
+				avail = dm["availability"]
+			}
+		}
+	}
+	if avail == nil {
+		avail = root
+	}
+
+	counts := map[string]int{}
+	collectTimes(avail, counts)
+
+	set := make(map[string]bool, len(counts))
+	for k := range counts {
+		set[k] = true
+	}
+	return set, nil
 }
 
 // parseToMinutes tries to parse a time string into minutes since midnight.
@@ -134,15 +149,12 @@ func GetAvailabilityTimes(date string) (string, error) {
 func parseToMinutes(s string) (int, bool) {
 	s = strings.TrimSpace(s)
 	s = strings.Trim(s, ";,|")
-	// Try a list of layouts
 	layouts := []string{
 		"15:04", "15:04:05",
 		"3:04 PM", "03:04 PM", "3:04PM", "03:04PM",
 		"3PM", "3 PM", "03PM", "03 PM",
 	}
-	// Normalize multiple spaces
 	s = strings.Join(strings.Fields(s), " ")
-	// Ensure AM/PM uppercase
 	s = strings.ToUpper(s)
 
 	for _, l := range layouts {
@@ -151,10 +163,7 @@ func parseToMinutes(s string) (int, bool) {
 		}
 	}
 
-	// Some inputs might be like "1:00P PM" or odd variants; try to remove stray letters
 	cleaned := s
-	// remove trailing non-digit/non-colon/non-space/AMPM chars
-	// keep only digits, colon, space, A, P, M
 	var b strings.Builder
 	for _, r := range cleaned {
 		if (r >= '0' && r <= '9') || r == ':' || r == ' ' || r == 'A' || r == 'P' || r == 'M' {
@@ -181,7 +190,6 @@ func collectTimes(v any, counts map[string]int) {
 			collectTimes(el, counts)
 		}
 	case map[string]any:
-		// If there is a "times" key with an array, process it.
 		if timesVal, ok := x["times"]; ok {
 			if arr, ok := timesVal.([]any); ok {
 				for _, item := range arr {
@@ -195,8 +203,6 @@ func collectTimes(v any, counts map[string]int) {
 				}
 			}
 		}
-		// Recurse into all values in the map, but skip the already-processed
-		// "times" key to avoid double-counting.
 		for k, val := range x {
 			if k == "times" {
 				continue
@@ -204,7 +210,6 @@ func collectTimes(v any, counts map[string]int) {
 			collectTimes(val, counts)
 		}
 	default:
-		// other primitive types ignored
 		return
 	}
 }
