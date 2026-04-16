@@ -1,15 +1,11 @@
 {
-  "lastUpdated": "2026-04-15T18:16:02-05:00",
+  "lastUpdated": "2026-04-15T19:47:30-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
       "dayName": "Wednesday",
       "date": "04-15-2026",
       "availability": [
-        {
-          "time": "7:00 PM",
-          "sheets": "2+"
-        },
         {
           "time": "8:30 PM",
           "sheets": "2+"
@@ -38,7 +34,7 @@
         },
         {
           "time": "8:30 PM",
-          "sheets": "2+"
+          "sheets": "1"
         },
         {
           "time": "10:00 PM",
@@ -90,7 +86,7 @@
         },
         {
           "time": "4:00 PM",
-          "sheets": "2+"
+          "sheets": "1"
         },
         {
           "time": "7:00 PM",
