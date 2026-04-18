@@ -2,11 +2,11 @@
 
 View ice availability at TeeLine: **https://straubt1.github.io/curling-schedule**
 
-Last Update at **04-17-2026 06:13:09 PM**
+Last Update at **04-17-2026 07:41:23 PM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
-|Friday|04-17-2026|7:00 PM<br>8:30 PM<br>10:00 PM|
+|Friday|04-17-2026|8:30 PM<br>10:00 PM|
 |Saturday|04-18-2026|11:30 AM<br>4:00 PM<br>7:00 PM<br>8:30 PM<br>10:00 PM|
 |Sunday|04-19-2026|11:30 AM<br>1:00 PM<br>8:30 PM<br>10:00 PM|
 |Monday|04-20-2026|5:30 PM<br>8:30 PM<br>10:00 PM|
