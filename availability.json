@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-18T02:33:53-05:00",
+  "lastUpdated": "2026-05-18T07:09:04-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
@@ -158,7 +158,7 @@
       "availability": [
         {
           "time": "1:00 PM",
-          "sheets": "2+"
+          "sheets": "1"
         },
         {
           "time": "2:30 PM",
@@ -188,7 +188,7 @@
         },
         {
           "time": "4:00 PM",
-          "sheets": "2+"
+          "sheets": "1"
         },
         {
           "time": "7:00 PM",
