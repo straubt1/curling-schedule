@@ -1,12 +1,7 @@
 {
-  "lastUpdated": "2026-05-24T22:16:54-05:00",
+  "lastUpdated": "2026-05-25T00:38:24-05:00",
   "timezone": "America/Chicago",
   "availability": [
-    {
-      "dayName": "Sunday",
-      "date": "05-24-2026",
-      "availability": []
-    },
     {
       "dayName": "Monday",
       "date": "05-25-2026",
@@ -195,6 +190,11 @@
           "sheets": "2+"
         }
       ]
+    },
+    {
+      "dayName": "Monday",
+      "date": "06-01-2026",
+      "availability": []
     }
   ]
 }
