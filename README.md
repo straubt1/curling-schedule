@@ -2,7 +2,7 @@
 
 View ice availability at TeeLine: **https://straubt1.github.io/curling-schedule**
 
-Last Update at **06-17-2026 12:53:15 PM**
+Last Update at **06-17-2026 01:47:41 PM**
 
 | Day         | Date        | Times       |
 | ----------- | ----------- | ----------- |
