@@ -1,168 +1,31 @@
 {
-  "lastUpdated": "2026-09-02T16:28:39-05:00",
+  "lastUpdated": "2026-09-02T18:44:03-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
       "dayName": "Wednesday",
       "date": "09-02-2026",
-      "availability": [
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "2+"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Thursday",
       "date": "09-03-2026",
-      "availability": [
-        {
-          "time": "11:30 AM",
-          "sheets": "1"
-        },
-        {
-          "time": "1:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "2:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "4:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "2+"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Friday",
       "date": "09-04-2026",
-      "availability": [
-        {
-          "time": "11:30 AM",
-          "sheets": "1"
-        },
-        {
-          "time": "1:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "2:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "4:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "1"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Saturday",
       "date": "09-05-2026",
-      "availability": [
-        {
-          "time": "11:30 AM",
-          "sheets": "2+"
-        },
-        {
-          "time": "1:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "2:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "4:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "2+"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Sunday",
       "date": "09-06-2026",
-      "availability": [
-        {
-          "time": "1:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "1"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Monday",
@@ -172,54 +35,12 @@
     {
       "dayName": "Tuesday",
       "date": "09-08-2026",
-      "availability": [
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "7:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "8:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "2+"
-        }
-      ]
+      "availability": []
     },
     {
       "dayName": "Wednesday",
       "date": "09-09-2026",
-      "availability": [
-        {
-          "time": "11:30 AM",
-          "sheets": "1"
-        },
-        {
-          "time": "1:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "2:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "4:00 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "5:30 PM",
-          "sheets": "2+"
-        },
-        {
-          "time": "10:00 PM",
-          "sheets": "2+"
-        }
-      ]
+      "availability": []
     }
   ]
 }
