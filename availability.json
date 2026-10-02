@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-02T05:55:32-05:00",
+  "lastUpdated": "2026-10-02T11:26:19-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
@@ -8,10 +8,6 @@
       "availability": [
         {
           "time": "1:00 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "2:30 PM",
           "sheets": "1"
         },
         {
@@ -187,8 +183,42 @@
           "sheets": "1"
         },
         {
-          "time": "4:00 PM",
+          "time": "5:30 PM",
+          "sheets": "2+"
+        },
+        {
+          "time": "7:00 PM",
+          "sheets": "2+"
+        },
+        {
+          "time": "8:30 PM",
           "sheets": "1"
+        },
+        {
+          "time": "10:00 PM",
+          "sheets": "2+"
+        }
+      ]
+    },
+    {
+      "dayName": "Friday",
+      "date": "10-09-2026",
+      "availability": [
+        {
+          "time": "11:30 AM",
+          "sheets": "1"
+        },
+        {
+          "time": "1:00 PM",
+          "sheets": "1"
+        },
+        {
+          "time": "2:30 PM",
+          "sheets": "1"
+        },
+        {
+          "time": "4:00 PM",
+          "sheets": "2+"
         },
         {
           "time": "5:30 PM",
@@ -207,11 +237,6 @@
           "sheets": "2+"
         }
       ]
-    },
-    {
-      "dayName": "Friday",
-      "date": "10-09-2026",
-      "availability": []
     }
   ]
 }
