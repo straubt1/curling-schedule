@@ -1,15 +1,11 @@
 {
-  "lastUpdated": "2026-10-10T11:03:58-05:00",
+  "lastUpdated": "2026-10-10T15:25:26-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
       "dayName": "Saturday",
       "date": "10-10-2026",
       "availability": [
-        {
-          "time": "1:00 PM",
-          "sheets": "1"
-        },
         {
           "time": "7:00 PM",
           "sheets": "1"
@@ -33,10 +29,6 @@
           "sheets": "1"
         },
         {
-          "time": "1:00 PM",
-          "sheets": "1"
-        },
-        {
           "time": "2:30 PM",
           "sheets": "2+"
         },
@@ -46,10 +38,6 @@
         },
         {
           "time": "5:30 PM",
-          "sheets": "1"
-        },
-        {
-          "time": "7:00 PM",
           "sheets": "1"
         },
         {
