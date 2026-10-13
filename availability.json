@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-13T00:57:50-05:00",
+  "lastUpdated": "2026-10-13T09:02:27-05:00",
   "timezone": "America/Chicago",
   "availability": [
     {
@@ -231,7 +231,12 @@
     {
       "dayName": "Tuesday",
       "date": "10-20-2026",
-      "availability": []
+      "availability": [
+        {
+          "time": "10:00 PM",
+          "sheets": "2+"
+        }
+      ]
     }
   ]
 }
